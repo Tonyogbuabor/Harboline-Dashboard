@@ -51,6 +51,7 @@ export type DatePreset = 'all' | '30d' | '90d' | 'ytd' | 'custom';
 
 export type NavSection =
   | 'overview'
+  | 'executive'
   | 'regional'
   | 'products'
   | 'reps'
@@ -151,3 +152,49 @@ export interface DimensionBreakdown {
   splyAvgDiscountPct: number;
   sharePct: number;
 }
+
+export type ExecutivePriority = 'Immediate' | 'This Week' | 'Strategic';
+
+export type ExecutiveFocusArea =
+  | 'Margin Protection'
+  | 'Revenue Recovery'
+  | 'Discount Governance'
+  | 'Inventory & Capacity'
+  | 'Growth Expansion';
+
+export interface ActionableRecommendation {
+  id: string;
+  priority: ExecutivePriority;
+  focusArea: ExecutiveFocusArea;
+  owner: string;
+  title: string;
+  situationSummary: string;
+  actionNarrative: string;
+  actionSteps: string[];
+  estimatedImpact: string;
+  drillTarget?: {
+    label: string;
+    filterKey: 'region' | 'category' | 'channel' | 'state' | 'salesRep' | 'product';
+    filterValue: string;
+  };
+}
+
+export interface ExecutiveSummaryData {
+  headline: string;
+  openingBrief: string;
+  profitabilityNarrative: string;
+  commercialPulseNarrative: string;
+  topPerformerCallout: {
+    entity: string;
+    dimension: string;
+    narrative: string;
+  } | null;
+  watchListCallout: {
+    entity: string;
+    dimension: string;
+    narrative: string;
+  } | null;
+  recommendations: ActionableRecommendation[];
+  activeFilterContext: string;
+}
+

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   LayoutDashboard,
+  FileText,
   MapPin,
   Package,
   Users,
@@ -30,6 +31,7 @@ const NAV_ITEMS: Array<{
   icon: React.ComponentType<{ className?: string }>;
 }> = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { id: 'executive', label: 'Executive Summary', icon: FileText },
   { id: 'regional', label: 'Regional & State', icon: MapPin },
   { id: 'products', label: 'Products & Channels', icon: Package },
   { id: 'reps', label: 'Sales Reps', icon: Users },

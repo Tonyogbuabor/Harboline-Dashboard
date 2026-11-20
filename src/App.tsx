@@ -22,6 +22,7 @@ import {
   getDatasetBounds,
 } from './utils/yoyUtils';
 import { generateDeterministicInsights } from './utils/insightsEngine';
+import { generateExecutiveSummary } from './utils/executiveSummaryEngine';
 import { Sidebar } from './components/Sidebar';
 import { HeaderControls } from './components/HeaderControls';
 import { KpiRow } from './components/KpiRow';
@@ -30,6 +31,7 @@ import { SecondaryBreakdownRow } from './components/SecondaryBreakdownRow';
 import { InsightsPanel } from './components/InsightsPanel';
 import { OrderLedgerTable } from './components/OrderLedgerTable';
 import { HygieneModal } from './components/HygieneModal';
+import { ExecutiveSummaryView } from './components/ExecutiveSummaryView';
 import {
   ProductsChannelsSectionView,
   RegionalSectionView,
@@ -319,6 +321,15 @@ export default function App() {
       splyCohort
     );
 
+    const executiveSummary = generateExecutiveSummary(
+      filteredOrders,
+      currentYoYCohort,
+      splyCohort,
+      kpi,
+      window,
+      filters
+    );
+
     return {
       window,
       filteredOrders,
@@ -331,6 +342,7 @@ export default function App() {
       repBreakdown,
       channelBreakdown,
       insights,
+      executiveSummary,
     };
   }, [orders, filters, granularity]);
 
@@ -448,6 +460,20 @@ export default function App() {
               }
             />
           </>
+        )}
+
+        {activeSection === 'executive' && (
+          <ExecutiveSummaryView
+            summary={analytics.executiveSummary}
+            kpi={analytics.kpi}
+            window={analytics.window}
+            onApplyDrillFilter={(key, value, navigateToOverview) => {
+              updateFilter(key, value);
+              if (navigateToOverview) {
+                setActiveSection('overview');
+              }
+            }}
+          />
         )}
 
         {activeSection === 'regional' && (
